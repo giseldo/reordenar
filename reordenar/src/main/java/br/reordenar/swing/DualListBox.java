@@ -327,6 +327,7 @@ public class DualListBox extends JPanel {
   
   private class escolherListner implements ActionListener {
 
+	  
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			int returnVal = fc.showOpenDialog(DualListBox.this);
