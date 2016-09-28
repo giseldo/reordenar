@@ -350,7 +350,7 @@ public class DualListBox extends JPanel {
 			    for (String nomeTabela : nomeDasTabelas) {
 			    	listModel.addElement(nomeTabela);
 			    }
-			    dual.clearSourceListModel();
+			    dual.clearSourceListModel(); 
 			    dual.addSourceElements(listModel);
 				
 				
