@@ -13,7 +13,7 @@ public class TratarArquivo {
 
 	public static Set<String> getDistinctComONomeDasTabelas(String nomeArquivo) {
 		Set<String> nomeDasTabelas = new HashSet<String>();
-		
+
 		try {
 
 			FileReader arq = new FileReader(nomeArquivo);
@@ -24,7 +24,6 @@ public class TratarArquivo {
 			linha = lerArq.readLine();
 
 			while (linha != null) {
-
 
 				String novaLinha = linha.substring(12);
 				int ultimoEspaco = novaLinha.indexOf(" ");
@@ -42,11 +41,37 @@ public class TratarArquivo {
 
 	}
 
-	public static String[][] getMatrizFromFileComTabelasDesordenadas(Map<String, String> mapComTabelasOrdenadas, String nomeArqOriginal) {
+	public static Integer getQuantidadeLinhasArquivo(String nomeArquivo) {
+		Integer qtdLinhas = 0;
+		try {
 
-		// TODO pegar a quantidade de linhas do arquivo e substituir por esta constant
-		int tamanhoMaximo = 9; 
-		
+			FileReader arq = new FileReader(nomeArquivo);
+			BufferedReader lerArq = new BufferedReader(arq);
+
+			String linha;
+
+			linha = lerArq.readLine();
+
+			while (linha != null) {
+				qtdLinhas++;
+
+				linha = lerArq.readLine();
+			}
+			lerArq.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return qtdLinhas;
+
+	}
+
+	public static String[][] getMatrizFromFileComTabelasDesordenadas(Map<String, String> mapComTabelasOrdenadas,
+			String nomeArqOriginal) {
+
+		// TODO pegar a quantidade de linhas do arquivo e substituir por esta
+		// constant
+		Integer tamanhoMaximo = getQuantidadeLinhasArquivo(nomeArqOriginal);
+
 		FileReader arq;
 
 		String[][] matrix = new String[tamanhoMaximo][2];
@@ -107,6 +132,7 @@ public class TratarArquivo {
 	public static void generateFileFromMatriz(String[][] matriz, String nomeNovoArquivo) {
 
 		try {
+			// TODO APAGAR O ARQUIVO ANTES
 
 			for (int i = 0; i < matriz.length; i++) {
 

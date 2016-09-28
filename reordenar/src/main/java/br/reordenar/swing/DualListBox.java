@@ -14,6 +14,7 @@ import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
@@ -250,6 +251,8 @@ public class DualListBox extends JPanel {
     destLabel = new JLabel(DEFAULT_DEST_CHOICE_LABEL);
     destListModel = new SortedListModel();
     destList = new JList(destListModel);
+    
+    
     add(destLabel, new GridBagConstraints(2, 0, 1, 1, 0, 0,
         GridBagConstraints.CENTER, GridBagConstraints.NONE,
         EMPTY_INSETS, 0, 0));
@@ -258,21 +261,15 @@ public class DualListBox extends JPanel {
         EMPTY_INSETS, 0, 0));
   }
 
+ 
+  static DualListBox dual = new DualListBox();
+  
   public static void main(String args[]) {
     JFrame f = new JFrame("Dual List Box Tester");
     f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     
-    DualListBox dual = new DualListBox();
-    
-    
-    // TODO GISELDO MUDAR NOME DO ARQUIVO
     DefaultListModel listModel = new DefaultListModel();
-    String nomeArquivoOriginal = "c:/temp/ARQ.txt";
-    Set<String> nomeDasTabelas = new HashSet<String>();
-    nomeDasTabelas = TratarArquivo.getDistinctComONomeDasTabelas(nomeArquivoOriginal);
-    for (String nomeTabela : nomeDasTabelas) {
-    	listModel.addElement(nomeTabela);
-    }
+
     dual.addSourceElements(listModel);
   
     f.getContentPane().add(dual, BorderLayout.CENTER);
@@ -280,7 +277,7 @@ public class DualListBox extends JPanel {
     f.setVisible(true);
   }
   String nomeArquivoOriginal;
-  String nomeNovoArquivo = "C:/Temp/ARQ_NOVO.txt";
+  String nomeArquivoNovo;
 
   // TODO GISELDO
   private class reordenadListener implements ActionListener {
@@ -298,7 +295,7 @@ public class DualListBox extends JPanel {
 			String[][] matrix = TratarArquivo.getMatrizFromFileComTabelasDesordenadas(tabelasOrdenadas, nomeArquivoOriginal);
 			
 			TratarArquivo.getMatrizReordenadaFromMatrizDesordenada(matrix);
-			TratarArquivo.generateFileFromMatriz(matrix, nomeNovoArquivo);
+			TratarArquivo.generateFileFromMatriz(matrix, nomeArquivoNovo);
 			
 			JOptionPane.showMessageDialog(null,"Arquivo Reordenado Gerado");
 	      
@@ -322,11 +319,9 @@ public class DualListBox extends JPanel {
     }
   }
   
-  JFileChooser fc;
-  
+  JFileChooser fc = new JFileChooser();
   
   private class escolherListner implements ActionListener {
- 
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
@@ -334,7 +329,25 @@ public class DualListBox extends JPanel {
 			
 			if (returnVal == JFileChooser.APPROVE_OPTION) {
 			File file = fc.getSelectedFile();
-				nomeArquivoOriginal = file.getName();
+				try {
+					nomeArquivoOriginal = file.getCanonicalPath();
+					nomeArquivoNovo = nomeArquivoOriginal+ "REORDENAR";
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				
+				// TODO GISELDO MUDAR NOME DO ARQUIVO
+			    DefaultListModel listModel = new DefaultListModel();
+			 
+			    Set<String> nomeDasTabelas = new HashSet<String>();
+			    nomeDasTabelas = TratarArquivo.getDistinctComONomeDasTabelas(nomeArquivoOriginal);
+			    for (String nomeTabela : nomeDasTabelas) {
+			    	listModel.addElement(nomeTabela);
+			    }
+			    dual.addSourceElements(listModel);
+				
+				
 			}
 			
 		}
