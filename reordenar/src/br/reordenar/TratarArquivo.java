@@ -14,6 +14,7 @@ public class TratarArquivo {
 	public static Set<String> getDistinctComONomeDasTabelas(String nomeArquivo) {
 		Set<String> nomeDasTabelas = new HashSet<String>();
 
+		
 		try {
 
 			FileReader arq = new FileReader(nomeArquivo);
