@@ -15,11 +15,13 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.SortedSet;
@@ -136,7 +138,9 @@ public class DualListBox extends JPanel {
   }
 
   private void fillListModel(SortedListModel model, Object newValues[]) {
-    model.addAll(newValues);
+    
+	  
+	  model.addAll(newValues);
   }
 
   public Iterator sourceIterator() {
@@ -331,7 +335,7 @@ public class DualListBox extends JPanel {
 			File file = fc.getSelectedFile();
 				try {
 					nomeArquivoOriginal = file.getCanonicalPath();
-					nomeArquivoNovo = nomeArquivoOriginal+ "REORDENAR";
+					nomeArquivoNovo = nomeArquivoOriginal+ "_REORDENAR";
 				} catch (IOException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
@@ -345,6 +349,7 @@ public class DualListBox extends JPanel {
 			    for (String nomeTabela : nomeDasTabelas) {
 			    	listModel.addElement(nomeTabela);
 			    }
+			    dual.clearSourceListModel();
 			    dual.addSourceElements(listModel);
 				
 				
@@ -352,8 +357,6 @@ public class DualListBox extends JPanel {
 			
 		}
 
-     
-  
   }
 
 
@@ -362,10 +365,12 @@ public class DualListBox extends JPanel {
 
 class SortedListModel extends AbstractListModel {
 
-  SortedSet model;
+  List model;
 
+  
   public SortedListModel() {
-    model = new TreeSet();
+    model = new ArrayList();
+    
   }
 
   public int getSize() {
@@ -397,17 +402,13 @@ class SortedListModel extends AbstractListModel {
     return model.contains(element);
   }
 
-  public Object firstElement() {
-    return model.first();
-  }
+ 
 
   public Iterator iterator() {
     return model.iterator();
   }
 
-  public Object lastElement() {
-    return model.last();
-  }
+ 
 
   public boolean removeElement(Object element) {
     boolean removed = model.remove(element);
