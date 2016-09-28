@@ -1,4 +1,4 @@
-package br.reordenar.swing;
+package br.reordenar.swing.lixo;
 
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;

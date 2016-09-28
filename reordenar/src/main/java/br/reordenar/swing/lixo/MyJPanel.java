@@ -1,4 +1,4 @@
-package br.reordenar.swing;
+package br.reordenar.swing.lixo;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -61,7 +61,7 @@ public class MyJPanel  extends JPanel implements ActionListener{
       
     	
       	
-      String nomeArquivoOriginal = "C:/Temp/ARQ.txt";
+      String nomeArquivoOriginal = "c:/temp/ARQ.txt";
       
       // TODO aqui precisa colocar dois 
       

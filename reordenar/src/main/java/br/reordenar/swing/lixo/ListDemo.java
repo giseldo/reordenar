@@ -29,7 +29,7 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */ 
 
-package br.reordenar.swing;
+package br.reordenar.swing.lixo;
 
 import java.awt.*;
 import java.awt.event.*;
@@ -56,8 +56,9 @@ public class ListDemo extends JPanel
         super(new BorderLayout());
 
         listModel = new DefaultListModel();
+        // TODO MUDAR NOME DO ARQUIVO
+        String nomeArquivoOriginal = "c:/temp/ARQ.txt";
         
-        String nomeArquivoOriginal = "C:/Temp/ARQ.txt";
         Set<String> nomeDasTabelas = new HashSet<String>();
         nomeDasTabelas = TratarArquivo.getDistinctComONomeDasTabelas(nomeArquivoOriginal);
         for (String nomeTabela : nomeDasTabelas) {
@@ -68,6 +69,11 @@ public class ListDemo extends JPanel
          //Create the list and put it in a scroll pane.
         list = new JList(listModel);
         list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+
+        list.setDragEnabled(true);
+        list.setDropMode(DropMode.INSERT);
+
+        
         list.setSelectedIndex(0);
         list.addListSelectionListener(this);
         list.setVisibleRowCount(5);
