@@ -47,13 +47,13 @@ public class DualListBox extends JPanel {
 
   private static final Insets EMPTY_INSETS = new Insets(0, 0, 0, 0);
 
-  private static final String ADD_BUTTON_LABEL = "Add >>";
+  private static final String ADD_BUTTON_LABEL = "Adicionar >>";
 
-  private static final String REMOVE_BUTTON_LABEL = "<< Remove";
+  private static final String REMOVE_BUTTON_LABEL = "<< Remover";
 
-  private static final String DEFAULT_SOURCE_CHOICE_LABEL = "Available Choices";
+  private static final String DEFAULT_SOURCE_CHOICE_LABEL = "Campos das Tabelas";
 
-  private static final String DEFAULT_DEST_CHOICE_LABEL = "Your Choices";
+  private static final String DEFAULT_DEST_CHOICE_LABEL = "Lista Ordenada";
 
   private JLabel sourceLabel;
 
@@ -236,7 +236,7 @@ public class DualListBox extends JPanel {
             0, 5, 0, 5), 0, 0));
     removeButton.addActionListener(new RemoveListener());
 
-    // TODO GISELDO regerar buttao
+    // TODO RODRIGO regerar buttao
     regerarButton = new JButton(" REORDENAR" );
     add(regerarButton, new GridBagConstraints(1, 7, 1, 2, 0, .25,
             GridBagConstraints.CENTER, GridBagConstraints.NONE, new Insets(
@@ -245,7 +245,7 @@ public class DualListBox extends JPanel {
     
     
     
-    // TODO GISELDO regerar buttao
+    // TODO RODRIGO regerar buttao
     escolherButton = new JButton(" ESCOLHER" );
     add(escolherButton, new GridBagConstraints(1, 10, 1, 2, 0, .25,
             GridBagConstraints.CENTER, GridBagConstraints.NONE, new Insets(
@@ -280,10 +280,9 @@ public class DualListBox extends JPanel {
     f.setSize(400, 300);
     f.setVisible(true);
   }
-  String nomeArquivoOriginal;
-  String nomeArquivoNovo;
 
-  // TODO GISELDO
+
+  // TODO RODRIGO
   private class reordenadListener implements ActionListener {
 	    public void actionPerformed(ActionEvent e) {
 	    	Object selected[] = sourceList.getSelectedValues();
@@ -297,10 +296,8 @@ public class DualListBox extends JPanel {
 			}
 			
 			String[][] matrix = TratarArquivo.getMatrizFromFileComTabelasDesordenadas(tabelasOrdenadas, nomeArquivoOriginal);
-			
 			TratarArquivo.getMatrizReordenadaFromMatrizDesordenada(matrix);
 			TratarArquivo.generateFileFromMatriz(matrix, nomeArquivoNovo);
-			
 			JOptionPane.showMessageDialog(null,"Arquivo Reordenado Gerado");
 	      
 	    }
@@ -324,7 +321,8 @@ public class DualListBox extends JPanel {
   }
   
   JFileChooser fc = new JFileChooser();
-  
+  String nomeArquivoOriginal;
+  String nomeArquivoNovo;
   private class escolherListner implements ActionListener {
 
 	  
@@ -336,13 +334,13 @@ public class DualListBox extends JPanel {
 			File file = fc.getSelectedFile();
 				try {
 					nomeArquivoOriginal = file.getCanonicalPath();
-					nomeArquivoNovo = nomeArquivoOriginal+ "_REORDENAR";
+					nomeArquivoNovo = nomeArquivoOriginal.replace(".txt", "_Reordenado.txt");
 				} catch (IOException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
 				
-				// TODO GISELDO MUDAR NOME DO ARQUIVO
+				// TODO RODRIGO MUDAR NOME DO ARQUIVO
 			    DefaultListModel listModel = new DefaultListModel();
 			 
 			    Set<String> nomeDasTabelas = new HashSet<String>();
@@ -350,7 +348,8 @@ public class DualListBox extends JPanel {
 			    for (String nomeTabela : nomeDasTabelas) {
 			    	listModel.addElement(nomeTabela);
 			    }
-			    dual.clearSourceListModel(); 
+			    dual.clearSourceListModel();
+			    dual.clearDestinationListModel();
 			    dual.addSourceElements(listModel);
 				
 				

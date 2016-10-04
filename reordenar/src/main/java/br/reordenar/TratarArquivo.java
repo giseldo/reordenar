@@ -2,6 +2,7 @@ package br.reordenar;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -132,8 +133,13 @@ public class TratarArquivo {
 	public static void generateFileFromMatriz(String[][] matriz, String nomeNovoArquivo) {
 
 		try {
-			// TODO APAGAR O ARQUIVO ANTES
+			File file = new File(nomeNovoArquivo);
+			if(file.exists()){
 
+				file.delete();
+
+	        }
+			
 			for (int i = 0; i < matriz.length; i++) {
 
 				FileWriter fw = new FileWriter(nomeNovoArquivo, true);
